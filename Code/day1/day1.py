@@ -47,8 +47,13 @@ import time
 import re
 
 def clean_calibration_value(text):
-    text = re.sub(r"\D", "", text)
-    return text[0] + text[-1]
+    # Match the first or last digit OR single digit if there is only one
+    match = re.search(r"\d.*\d|\d", text)  
+    if match:
+        #return first and last char in string
+        return match.group()[0] + match.group()[-1]
+    else:
+        return ""  
 
 start_time = time.time()
 
@@ -60,7 +65,6 @@ with open(directory +"day1.txt", "r") as file:
     while line:
         #remove all non digit chars
         line = clean_calibration_value(line)
-        
         total += int(line)
         
         line = file.readline()
