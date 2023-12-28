@@ -1,0 +1,5 @@
+What is python?
+    - python is a high-level programming languages
+    - dynamically typed (similar to JS?)
+    - garbage collected (no memory management)
+    - uses whitespace rather than brackets for code blocks 
