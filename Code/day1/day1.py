@@ -29,7 +29,7 @@ treb7uchet
 In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 
 Consider your entire calibration document. What is the sum of all of the calibration values?
--- End Day One --
+-- End Day One part 1--
 
 Lets Break this down:
 1abc2 = 12 because the first digit is 1 and the last digit is 2
@@ -41,12 +41,39 @@ So we simply need to:
     4. add them to the total
     
 seems simple enough, lets get to it.
+
+--- Part Two ---
+
+Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
+
+Equipped with this new information, you now need to find the real first and last digit on each line. For example:
+
+two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen
+
+In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+
+What is the sum of all of the calibration values?
+--- end part two ---
+
+One option is to simply convert all the names of the digits to the digit themselves
+The exsisting solution would continue working as expected in this case.
+
+lets go with that
 """
 
 import time
 import re
 
 def clean_calibration_value(text):
+    #replace digit names with actual names so that existing algorithm continues to work
+    text = replace_digit_names(text)
+    
     # Match the first or last digit OR single digit if there is only one
     match = re.search(r"\d.*\d|\d", text)  
     if match:
@@ -54,6 +81,27 @@ def clean_calibration_value(text):
         return match.group()[0] + match.group()[-1]
     else:
         return ""  
+
+def replace_digit_names(text):
+    # Define a dictionary mapping digit names to their corresponding digits (0-9)
+    digit_names = {
+        "zero": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+    }
+
+    #loop through dictionary and replace in string
+    for word, digit in digit_names.items():
+        text = text.replace(word.lower(), digit)
+
+    return text
 
 start_time = time.time()
 
