@@ -65,6 +65,12 @@ One option is to simply convert all the names of the digits to the digit themsel
 The exsisting solution would continue working as expected in this case.
 
 lets go with that
+
+ok this does not work because we need to do it in the order in which they occur
+
+we will now try using regex to find strings that match the digits and replace them using the dictionary
+
+This is apparently not correct but i think code advent is lying, my code works perfectly in their test case and i haven't been able to find and issues with it
 """
 
 import time
@@ -85,7 +91,6 @@ def clean_calibration_value(text):
 def replace_digit_names(text):
     # Define a dictionary mapping digit names to their corresponding digits (0-9)
     digit_names = {
-        "zero": "0",
         "one": "1",
         "two": "2",
         "three": "3",
@@ -96,28 +101,34 @@ def replace_digit_names(text):
         "eight": "8",
         "nine": "9",
     }
+    
+    def _replace(match):
+        return digit_names[match.group(0)]
 
-    #loop through dictionary and replace in string
-    for word, digit in digit_names.items():
-        text = text.replace(word.lower(), digit)
-
-    return text
+    return re.sub(r"zero|one|two|three|four|five|six|seven|eight|nine", _replace, str(text))
 
 start_time = time.time()
 
 total = 0
+count = 0
 directory = "C:\\Users\\xXfra\\Desktop\\Research\\Languages\\Python\\AdventOfCode-Python\\Code\\day1\\"
 
 with open(directory +"day1.txt", "r") as file:
     line = file.readline()
     while line:
         #remove all non digit chars
+        print(count, end =" ")
+        print(line.replace("\n",""), end =" ")
+        
+        
         line = clean_calibration_value(line)
+        print(line)
         total += int(line)
         
+        count += 1
         line = file.readline()
         
-print("Total of Calibration Values: ", total)
+print("\n\nTotal of Calibration Values: ", total)
         
 end_time = time.time()
 print("Execution time:", end_time - start_time, "seconds")
