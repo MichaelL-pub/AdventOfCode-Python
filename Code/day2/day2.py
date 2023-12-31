@@ -77,15 +77,16 @@ def isPossibleGame(game, redNum, greenNum, blueNum):
     
     gameAr = game.split(';')
     
+    #probably a better way to do this but this is good enough for now
     for gamestr in gameAr:
         for color in gamestr.split(','):
             if color.__contains__("red") and int(color.replace(" red","")) > maxRed:
                 maxRed = int(color.replace(" red",""))
-            elif color.__contains__("green") and int(color.replace(" green","")) > maxRed:
+            elif color.__contains__("green") and int(color.replace(" green","")) > maxGreen:
                 maxGreen = int(color.replace(" green",""))
-            elif color.__contains__("blue") and int(color.replace(" blue","")) > maxRed:
+            elif color.__contains__("blue") and int(color.replace(" blue","")) > maxBlue:
                 maxBlue = int(color.replace(" blue",""))
-                
+       
     if maxRed <= redNum and maxGreen <= greenNum and maxBlue <= blueNum:
         return True
     else:
